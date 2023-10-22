@@ -337,20 +337,18 @@ Uses PROMPT as header line format."
     (recursive-edit)
     input))
 
+(defvar c3po-buffer-action '((display-buffer-same-window))
+  "buffer action when displaying c3po buffers")
+
 (defun c3po-pop-results-buffer ()
   "Display `c3po-buffer-name' in a right side window."
   (interactive)
   (let ((buffer (get-buffer-create c3po-buffer-name)))
-    (display-buffer-in-side-window buffer
-                                   '((side . right)
-                                     (window-width . 0.5)))))
+    (display-buffer buffer c3po-buffer-action)))
 
 (defun c3po--pop-helper-buffer (buffer)
   "Show BUFFER on the bottom as a side window."
-  (let ((window (display-buffer-in-side-window
-                 (get-buffer  buffer)
-                 '((side . bottom)
-                   (window-height . 0.5)))))
+  (let ((window (display-buffer (get-buffer buffer) c3po-buffer-action)))
     (select-window window)))
 
 (defun c3po--diff-copy ()
